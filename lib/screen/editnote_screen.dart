@@ -36,23 +36,29 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
     appBar: AppBar(
       backgroundColor: Colors.black,
     ),
-    body: Scaffold(
-      backgroundColor: Colors.white,
-      body: Form(
-        key: _formKey,
-        child: Column(
+    body: GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        body: Form(
+          key: _formKey,
+          child: Column(
 
-          children: [
-            NoteFormWidget(
-              title: title,
-              description: description,
-              onChangedTitle: (title) => setState(() => this.title = title),
-              onChangedDescription: (description) =>
-                  setState(() => this.description = description),
-            ),
-            buildButton(),
+            children: [
+              NoteFormWidget(
+                title: title,
+                description: description,
+                onChangedTitle: (title) => setState(() => this.title = title),
+                onChangedDescription: (description) =>
+                    setState(() => this.description = description),
+              ),
+              buildButton(),
 
-          ],
+            ],
+          ),
         ),
       ),
     ),

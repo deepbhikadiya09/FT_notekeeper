@@ -39,59 +39,89 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      backgroundColor: Colors.black,
-      actions: [editButton(), deleteButton()],
-    ),
-    body: isLoading
-        ? Center(child: CircularProgressIndicator())
-        : Padding(
-      padding: EdgeInsets.all(12),
-      child: ListView(
-        padding: EdgeInsets.symmetric(vertical: 8),
-        children: [
-          Text(
-            note.title,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 8),
-          Text(
-            DateFormat.yMMMd().format(note.createdTime),
-            style: TextStyle(color: Colors.black),
-          ),
-          SizedBox(height: 8),
-          Text(
-            note.description,
-            style: TextStyle(color: Colors.black, fontSize: 18),
-          )
-        ],
-      ),
-    ),
-  );
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+        ),
+        body: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : Scaffold(
+          backgroundColor: Colors.white,
+                bottomNavigationBar: BottomAppBar(
+                  elevation: 0,
+                  child:Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: ()async{
+                            if (isLoading) return;
 
-  Widget editButton() => IconButton(
-      icon: Icon(Icons.edit_outlined),
-      onPressed: () async {
-        if (isLoading) return;
-
-        await Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AddEditNotePage(note: note),
-        ));
-
-        refreshNote();
-      });
-
-  Widget deleteButton() => IconButton(
-    icon: Icon(Icons.delete),
-    onPressed: () async {
-      showMyCupertinoDialoge();
-
-    },
-  );
+                            await Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AddEditNotePage(note: note),
+                              ),
+                            );
+                            refreshNote();
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: Center(child: Text("Edit",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),)),
+                          ),
+                        ),
+                        SizedBox(width: 10,),
+                        GestureDetector(
+                          onTap: (){
+                            showMyCupertinoDialoge();
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: Center(child: Text("Delete",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                body: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: ListView(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    children: [
+                      Text(
+                        "Title : ${note.title}",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        DateFormat.yMMMd().format(note.createdTime),
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        "Description : ${note.description}",
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+      );
 
   showMyCupertinoDialoge() {
     return showCupertinoModalPopup(
@@ -110,7 +140,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
               CupertinoDialogAction(
                 textStyle: TextStyle(color: Colors.red),
                 child: Text("Yes"),
-                onPressed: () async{
+                onPressed: () async {
                   await MyDataBase.instance.delete(widget.noteId);
                   Navigator.pop(context);
                   Navigator.pop(context);
@@ -120,5 +150,4 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
           );
         });
   }
-
 }
