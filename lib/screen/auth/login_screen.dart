@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     Text(
-                      "MyAuthApp",
+                      "NotesApp",
                       style: TextStyle(
                         color: Colors.lightBlue,
                         fontWeight: FontWeight.bold,

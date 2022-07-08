@@ -22,12 +22,12 @@ class _NotesPageState extends State<NotesPage> {
     super.initState();
     refreshNotes();
   }
-
-  @override
-  void dispose() {
-    MyDataBase.instance.close();
-    super.dispose();
-  }
+  final user = FirebaseAuth.instance.currentUser!;
+  // @override
+  // void dispose() {
+  //   MyDataBase.instance.close();
+  //   super.dispose();
+  // }
 
   Future refreshNotes() async {
     setState(() => isLoading = true);
@@ -43,7 +43,7 @@ class _NotesPageState extends State<NotesPage> {
           centerTitle: true,
           backgroundColor: Colors.black,
           title: Text(
-            'Notes',
+            "${user.email}",
             style: TextStyle(fontSize: 24),
           ),
           actions: [
@@ -130,6 +130,7 @@ class _NotesPageState extends State<NotesPage> {
                 child: Text("Yes"),
                 onPressed: () async {
                   FirebaseAuth.instance.signOut();
+                    Navigator.pop(context);
                 },
               ),
             ],
