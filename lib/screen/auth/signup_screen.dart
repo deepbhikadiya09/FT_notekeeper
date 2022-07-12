@@ -40,7 +40,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: Scaffold(
         /// APP BAR
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          backgroundColor: Colors.black,
+          // automaticallyImplyLeading: true,
           title: const Text("Sign Up"),
           centerTitle: true,
         ),
@@ -63,6 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
 
                     InputField(
+
                       controller: signUpController.emailSignUpController,
                       focusNode: signUpController.emailSignUpFocusNode,
                       hint: "Email",
@@ -102,12 +104,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           signUpController.shoPass.value
                               ? Icons.remove_red_eye_outlined
                               : Icons.remove_red_eye,
+                          color: Colors.black,
                         ),
                       ),
                       validator: (val) {
                         if (val!.isEmpty) {
                           return "Please Enter Password";
-                        } else {
+                        } else if(val.length>6){
+                          return "Please less then 6 character";
+
+                        }else {
                           return null;
                         }
                       },
@@ -131,6 +137,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           signUpController.showConfirmPass.value
                               ? Icons.remove_red_eye_outlined
                               : Icons.remove_red_eye,
+                          color: Colors.black,
+
                         ),
                       ),
                       controller:
@@ -156,15 +164,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: 20,
                     ),
 
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: Size(width / 1.1, height / 15)),
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          signUpController.signUpData();
-                        }
-                      },
-                      child: const Text("Sign Up"),
+                    Container(
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.black),
+                        ),
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            signUpController.signUpData();
+                          }
+                        },
+                        child: const Text("Sign Up"),
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -185,7 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             TextSpan(
                                 text: " Log in",
                                 style: TextStyle(
-                                    color: Theme.of(context).primaryColor))
+                                    color: Colors.red))
                           ],
                         ),
                       ),

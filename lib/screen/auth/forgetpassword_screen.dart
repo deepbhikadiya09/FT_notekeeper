@@ -30,6 +30,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: const Text("Forgot Password"),
         centerTitle: true,
       ),
@@ -74,15 +75,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
 
                 /// LOG IN BUTTON
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: Size(width / 1.1, height / 15)),
-                  onPressed: (){
-                    if (formKey.currentState!.validate()) {
-                      forgetController.resetPassword(context);
-                    }
-                  },
-                  child: const Text("Reset Password"),
+                Container(
+                  height: 50,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                    ),
+                    onPressed: (){
+                      if (formKey.currentState!.validate()) {
+                        forgetController.resetPassword(context);
+                      }
+                    },
+                    child: const Text("Reset Password"),
+                  ),
                 ),
               ],
             ),

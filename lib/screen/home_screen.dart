@@ -22,7 +22,9 @@ class _NotesPageState extends State<NotesPage> {
     super.initState();
     refreshNotes();
   }
+
   final user = FirebaseAuth.instance.currentUser!;
+
   // @override
   // void dispose() {
   //   MyDataBase.instance.close();
@@ -40,6 +42,7 @@ class _NotesPageState extends State<NotesPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+
           centerTitle: true,
           backgroundColor: Colors.black,
           title: Text(
@@ -50,24 +53,25 @@ class _NotesPageState extends State<NotesPage> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
-                onTap: (){
-                  showMyCupertinoDialoge();
-                },
+                  onTap: () {
+                    showMyCupertinoDialoge();
+                  },
                   child: Icon(
-                Icons.logout,
-                color: Colors.white,
-              )),
+                    Icons.logout,
+                    color: Colors.white,
+                  )),
             )
           ],
         ),
         body: Scaffold(
+          backgroundColor: Colors.black,
           body: Center(
             child: isLoading
                 ? CircularProgressIndicator()
                 : notes.isEmpty
                     ? Text(
                         'No Notes',
-                        style: TextStyle(color: Colors.white, fontSize: 24),
+                        style: TextStyle(color: Colors.black, fontSize: 24),
                       )
                     : buildNotes(),
           ),
@@ -88,28 +92,33 @@ class _NotesPageState extends State<NotesPage> {
         ),
       );
 
-  Widget buildNotes() => StaggeredGridView.countBuilder(
-        padding: EdgeInsets.all(8),
-        itemCount: notes.length,
-        staggeredTileBuilder: (index) => StaggeredTile.fit(2),
-        crossAxisCount: 4,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
-        itemBuilder: (context, index) {
-          final note = notes[index];
-
-          return GestureDetector(
-            onTap: () async {
-              await Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => NoteDetailPage(noteId: note.id!),
-              ));
-
-              refreshNotes();
-            },
-            child: NoteCardWidget(note: note, index: index),
-          );
-        },
-      );
+  Widget buildNotes() {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: ListView.builder(
+          reverse: true,
+          itemCount: notes.length,
+          itemBuilder: (context, index) {
+            final note = notes[index];
+            return Card(
+              child: GestureDetector(
+                onTap: () async {
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => NoteDetailPage(noteId: note.id!),
+                    ),
+                  );
+                  refreshNotes();
+                },
+                child: NoteCardWidget(
+                  note: note,
+                  index: index,
+                ),
+              ),
+            );
+          }),
+    );
+  }
 
   showMyCupertinoDialoge() {
     return showCupertinoModalPopup(
@@ -130,7 +139,7 @@ class _NotesPageState extends State<NotesPage> {
                 child: Text("Yes"),
                 onPressed: () async {
                   FirebaseAuth.instance.signOut();
-                    Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               ),
             ],

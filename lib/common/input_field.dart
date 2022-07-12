@@ -13,6 +13,7 @@ class InputField extends StatelessWidget {
   final Function(String?)? onChange;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
+
   const InputField({
     Key? key,
     required this.controller,
@@ -31,6 +32,7 @@ class InputField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       focusNode: focusNode,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscureText,
       decoration: InputDecoration(
         contentPadding:
@@ -53,14 +55,14 @@ class InputField extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
             width: 1,
-            color: Colors.black,
+            color: Colors.grey,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(
             width: 1,
-            color: Colors.lightBlue,
+            color: Colors.black,
           ),
         ),
         suffixIcon: suffixIcon ?? null,

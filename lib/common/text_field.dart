@@ -17,14 +17,13 @@ class NoteFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16),
+        child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
                 textInputAction: TextInputAction.next,
-
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 cursorColor: Colors.black,
                 initialValue: title,
                 decoration: InputDecoration(
@@ -46,9 +45,13 @@ class NoteFormWidget extends StatelessWidget {
                   ),
                   hintText: 'Title',
                 ),
-                validator: (title) => title != null && title.isEmpty
-                    ? 'The title cannot be empty'
-                    : null,
+                validator: (title) {
+                  if(title != null && title.isEmpty){
+                    return "Title can't be empty";
+                  }else if(title!.length>40){
+                    return "Please enter title less then 40 words";
+                  }
+                },
                 onChanged: onChangedTitle,
               ),
               SizedBox(height: 10,),

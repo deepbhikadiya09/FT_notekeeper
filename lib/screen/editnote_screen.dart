@@ -43,21 +43,27 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        body: Form(
-          key: _formKey,
-          child: Column(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16),
 
-            children: [
-              NoteFormWidget(
-                title: title,
-                description: description,
-                onChangedTitle: (title) => setState(() => this.title = title),
-                onChangedDescription: (description) =>
-                    setState(() => this.description = description),
+            child: Form(
+              key: _formKey,
+              child: Column(
+
+                children: [
+                  NoteFormWidget(
+                    title: title,
+                    description: description,
+                    onChangedTitle: (title) => setState(() => this.title = title),
+                    onChangedDescription: (description) =>
+                        setState(() => this.description = description),
+                  ),
+                  buildButton(),
+
+                ],
               ),
-              buildButton(),
-
-            ],
+            ),
           ),
         ),
       ),
@@ -68,11 +74,12 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
     final isFormValid = title.isNotEmpty && description.isNotEmpty;
 
     return Container(
-      height: 40,
-      width: 100,
+      height: 50,
+      width: double.infinity,
       child: ElevatedButton(
 
         style: ElevatedButton.styleFrom(
+
 
           onPrimary: Colors.white,
           primary: isFormValid ? Colors.black : Colors.black26

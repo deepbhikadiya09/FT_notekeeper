@@ -39,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
         appBar: AppBar(
           // title: const Text("Log In"),
           centerTitle: true,
+          backgroundColor: Colors.black,
         ),
         body: Form(
           key: formKey,
@@ -49,13 +50,12 @@ class _LoginScreenState extends State<LoginScreen> {
               width: width,
               height: height,
               child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
                     Text(
                       "NotesApp",
                       style: TextStyle(
-                        color: Colors.lightBlue,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 22,
                       ),
@@ -102,18 +102,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           loginController.showPass.value
                               ? Icons.remove_red_eye_outlined
                               : Icons.remove_red_eye,
+                          color: Colors.black,
                         ),
                       ),
                       validator: (val) {
                         if (val!.isEmpty) {
                           return "Please Enter Password";
-                        } else {
+                        } else if(val.length>6){
+                          return "Please less then 6 character";
+
+                        }else {
                           return null;
                         }
                       },
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -128,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: const Text(
                             "Forgot Password?",
                             style: TextStyle(
-                              color: Colors.blue,
+                              color: Colors.red,
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
                             ),
@@ -137,17 +141,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: Size(width / 1.1, height / 15)),
-                      onPressed: () async {
-                        if (formKey.currentState!.validate()) {
-                          loginController.logInData();
-                        }
-                      },
-                      child: const Text("Log In"),
+                    Container(
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.black),
+                        ),
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            loginController.logInData();
+                          }
+                        },
+                        child: const Text("Log In"),
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -166,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextSpan(
                               text: " Register",
                               style: TextStyle(
-                                color: Theme.of(context).primaryColor,
+                                color: Colors.red,
                               ),
                             ),
                           ],

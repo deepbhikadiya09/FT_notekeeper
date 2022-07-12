@@ -100,7 +100,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                     padding: EdgeInsets.symmetric(vertical: 8),
                     children: [
                       Text(
-                        "Title : ${note.title}",
+                        "${note.title}",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 22,
@@ -110,11 +110,13 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                       SizedBox(height: 8),
                       Text(
                         DateFormat.yMMMd().format(note.createdTime),
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.red,fontSize: 15,fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 8),
+                      Divider(height: 1,color: Colors.black,thickness: 1,),
+                      SizedBox(height: 8),
                       Text(
-                        "Description : ${note.description}",
+                        "${note.description}",
                         style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
                     ],
